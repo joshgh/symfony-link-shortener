@@ -19,7 +19,12 @@ RUN a2ensite 000-default.conf
 
 COPY ./php /var/www/html
 
+RUN composer install --no-scripts
+RUN bin/console assets:install --symlink --relative
+RUN rm -Rf var/cache/dev/*
 
 RUN usermod -u 1000 www-data
+RUN chown -R www-data:www-data /var/www/html/var/cache
+RUN chown -R www-data:www-data /var/www/html/var/log
 
 EXPOSE 80
