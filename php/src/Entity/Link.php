@@ -11,7 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=LinkRepository::class)
  * @UniqueEntity(
  *      fields="identifier",
- *      message="This shortlink is already in use, please choose another"
+ *      message="This shortlink is already in use, please choose another",
+ *      groups={"Default", "identifier"}
  * )
  */
 class Link
@@ -34,9 +35,9 @@ class Link
      * @ORM\Column(type="string", length=20)
      * @Assert\Regex(
      *      pattern="/^[a-zA-Z0-9]{5,9}$/",
-     *      message="Identifier must only contain alphanumeric characters and be from 5 to 9 characters long"
+     *      message="Identifier must only contain alphanumeric characters and be from 5 to 9 characters long",
+     *      groups={"Default", "identifier"}
      * )
-     * @Assert\NotBlank
      */
     private $identifier;
 
@@ -62,7 +63,7 @@ class Link
         return $this->identifier;
     }
 
-    public function setIdentifier(string $identifier): self
+    public function setIdentifier(?string $identifier): self
     {
         $this->identifier = $identifier;
 
