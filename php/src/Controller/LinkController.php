@@ -58,4 +58,37 @@ class LinkController extends AbstractController
         return new RedirectResponse($url);
     }
 
+    /**
+     * @Route("/link/{id}/edit", name="link_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Link $link): Response
+    {
+        $form = $this->createForm(LinkType::class, $link);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('link_new', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('link/edit.html.twig', [
+            'link' => $link,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/link/{id}", name="link_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Link $link): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$link->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($link);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('link_new', [], Response::HTTP_SEE_OTHER);
+    }
 }
