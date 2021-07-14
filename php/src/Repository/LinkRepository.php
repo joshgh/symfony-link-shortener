@@ -47,4 +47,12 @@ class LinkRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countTotalRedirects()
+    {
+        return $this->createQueryBuilder('l')
+            ->select('SUM(l.redirectCount) as totalRedirects')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

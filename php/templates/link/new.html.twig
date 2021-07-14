@@ -9,6 +9,7 @@
             {{ include('link/_form.html.twig') }}
         </div><!-- /.col -->
         <div class="col-sm-4">
+            <h3>Redirects performed: {{ totalRedirects|default(0) }}</h3>
             {% if links %}
                 <ul>
                 {% for link in links %}

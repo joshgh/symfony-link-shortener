@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Link;
 use App\Form\LinkType;
 use App\Repository\LinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ class LinkController extends AbstractController
     {
         $link = new Link();
         $links = $linkRepository->findAll();
+        $totalRedirects = $linkRepository->countTotalRedirects();
         $form = $this->createForm(LinkType::class, $link);
         $form->handleRequest($request);
 
@@ -44,6 +46,7 @@ class LinkController extends AbstractController
             'link' => $link,
             'links' => $links,
             'form' => $form->createView(),
+            'totalRedirects' => $totalRedirects,
         ]);
     }
 
@@ -60,9 +63,14 @@ class LinkController extends AbstractController
     /**
      * @Route("/{identifier}", name="link_follow", methods={"GET"})
      */
-    public function follow(Link $link): Response
+    public function follow(Link $link, EntityManagerInterface $em): Response
     {
         $url = $link->getUrl();
+        $redirectCount = $link->getRedirectCount() ?: 0;
+        $redirectCount++;
+        $link->setRedirectCount($redirectCount);
+        $em->flush($link);
+
         return new RedirectResponse($url);
     }
 

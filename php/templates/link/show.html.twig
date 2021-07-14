@@ -20,6 +20,10 @@
                 {% set shortlink = url('link_follow', {'identifier':link.identifier}) %}
                 <td><a href="{{ shortlink }}">{{shortlink}}</a></td>
             </tr>
+            <tr>
+                <th>Redirect Count</th>
+                <td>{{ link.redirectCount|default(0) }}</td>
+            </tr>
         </tbody>
     </table>
     <div class="my-2">

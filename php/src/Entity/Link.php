@@ -41,6 +41,11 @@ class Link
      */
     private $identifier;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $redirectCount = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +71,18 @@ class Link
     public function setIdentifier(?string $identifier): self
     {
         $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    public function getRedirectCount(): ?int
+    {
+        return $this->redirectCount;
+    }
+
+    public function setRedirectCount(?int $redirectCount): self
+    {
+        $this->redirectCount = $redirectCount;
 
         return $this;
     }
