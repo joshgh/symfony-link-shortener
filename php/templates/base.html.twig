@@ -7,6 +7,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
@@ -17,9 +18,9 @@
     </head>
     <body>
         <div class="container">
-            {% if app.request.get('_route') != 'link_new' %}
-                <div><a href="{{ path('link_new') }}">Home</a></div>
-            {% endif %}
+            <nav class="navbar navbar-dark bg-dark sls-navbar">
+                <a href="{{ path('link_new') }}" class="navbar-brand" href="#">Link Shortener</a>
+            </nav>
             {% block body %}{% endblock %}
         </div>
     </body>
