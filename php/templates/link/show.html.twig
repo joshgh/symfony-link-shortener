@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Link{% endblock %}
+
+{% block body %}
+    <h1>Link</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Url</th>
+                <td>{{ link.url }}</td>
+            </tr>
+            <tr>
+                <th>Identifier</th>
+                <td>{{ link.identifier }}</td>
+            </tr>
+            <tr>
+                <th>Shortlink</th>
+                {% set shortlink = url('link_follow', {'identifier':link.identifier}) %}
+                <td><a href="{{ shortlink }}">{{shortlink}}</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

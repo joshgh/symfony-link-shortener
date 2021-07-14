@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Link{% endblock %}
+
+{% block body %}
+    <h1>Create a new Link</h1>
+
+    {{ include('link/_form.html.twig') }}
+
+    {% if links %}
+        <ul>
+        {% for link in links %}
+            <li><a href="{{path('link_show', {'identifier':link.identifier})}}">{{ link.identifier }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
