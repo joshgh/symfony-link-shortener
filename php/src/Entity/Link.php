@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use App\Repository\LinkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LinkRepository::class)
+ * @UniqueEntity(
+ *      fields="identifier",
+ *      message="This shortlink is already in use, please choose another"
+ * )
  */
 class Link
 {
@@ -19,11 +25,18 @@ class Link
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Url
+     * @Assert\NotBlank
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Regex(
+     *      pattern="/^[a-zA-Z0-9]{5,9}$/",
+     *      message="Identifier must only contain alphanumeric characters and be from 5 to 9 characters long"
+     * )
+     * @Assert\NotBlank
      */
     private $identifier;
 

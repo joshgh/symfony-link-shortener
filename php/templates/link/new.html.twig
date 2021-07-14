@@ -4,14 +4,18 @@
 
 {% block body %}
     <h1>Create a new Link</h1>
-
-    {{ include('link/_form.html.twig') }}
-
-    {% if links %}
-        <ul>
-        {% for link in links %}
-            <li><a href="{{path('link_show', {'identifier':link.identifier})}}">{{ link.identifier }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="row">
+        <div class="col-sm-8">
+            {{ include('link/_form.html.twig') }}
+        </div><!-- /.col -->
+        <div class="col-sm-4">
+            {% if links %}
+                <ul>
+                {% for link in links %}
+                    <li><a href="{{path('link_show', {'identifier':link.identifier})}}">{{ link.identifier }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 {% endblock %}
